@@ -1,0 +1,13 @@
+odtn1:
+  id: 1
+  parentry: '1'
+
+odtn1_odtn2:
+  id: 2
+  parent_id: 1
+  parentry: '1.2'
+
+odtn1_odtn2_odtn3:
+  id: 3
+  parent_id: 2
+  parentry: '1.2.3'
