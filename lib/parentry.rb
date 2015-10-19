@@ -23,7 +23,9 @@ module Parentry
       after_create :commit_parentry
       before_update :assign_parentry, if: proc { changes[:parent_id].present? }
       after_update :cascade_parentry, if: proc { changes[parentry_column].present? }
-      after_save :cache_parentry_depth, if: proc { cache_depth && depth != parentry_depth }
+
+      before_validation :cache_parentry_depth, if: proc { cache_depth }
+      before_save :cache_parentry_depth, if: proc { cache_depth }
 
       after_save :touch_ancestors_callback
       after_touch :touch_ancestors_callback

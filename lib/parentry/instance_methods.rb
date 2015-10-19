@@ -18,7 +18,7 @@ module Parentry
     end
 
     def cache_parentry_depth
-      update_column(:parentry_depth, depth)
+      write_attribute(:parentry_depth, depth)
     end
 
     def cascade_parentry

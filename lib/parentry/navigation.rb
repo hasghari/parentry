@@ -9,7 +9,7 @@ module Parentry
     end
 
     def root?
-      root_id == id
+      parent_id.nil?
     end
 
     def path_ids
@@ -78,7 +78,8 @@ module Parentry
     end
 
     def depth
-      path_ids.size - 1 + depth_offset
+      return depth_offset if root?
+      parent.depth + 1
     end
 
     private
