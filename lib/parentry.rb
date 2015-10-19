@@ -7,7 +7,7 @@ module Parentry
 
   def self.included(base)
     base.class_eval do
-      mattr_accessor :parentry_column, :depth_offset, :cache_depth
+      mattr_accessor :parentry_column, :depth_offset, :cache_depth, :touch_ancestors
 
       belongs_to :parent, class_name: base_class.name
       has_many :children, class_name: base_class.name, foreign_key: :parent_id, dependent: :destroy
@@ -24,6 +24,10 @@ module Parentry
       before_update :assign_parentry, if: proc { changes[:parent_id].present? }
       after_update :cascade_parentry, if: proc { changes[parentry_column].present? }
       after_save :cache_parentry_depth, if: proc { cache_depth && depth != parentry_depth }
+
+      after_save :touch_ancestors_callback
+      after_touch :touch_ancestors_callback
+      after_destroy :touch_ancestors_callback
 
       scope :order_by_parentry, -> { order("nlevel(#{parentry_column})") }
 

@@ -64,4 +64,55 @@ describe Parentry::InstanceMethods do
       expect(child.reload.parentry).to eq "#{node.parentry}.#{child.id}"
     end
   end
+
+  context 'touch ancestors option' do
+    context 'enabled' do
+      it 'should update ancestor timestamp' do
+        parent = TouchTreeNode.create
+        expect do
+          parent.children.create
+        end.to change { parent.reload.updated_at }
+      end
+
+      context 'parent changes' do
+        it 'should update old parent timestamp' do
+          parent = TouchTreeNode.create
+          node = parent.children.create
+          new_parent = TouchTreeNode.create
+
+          expect do
+            node.update_attributes(parent: new_parent)
+          end.to change { parent.reload.updated_at }
+        end
+
+        it 'should update new parent timestamp' do
+          parent = TouchTreeNode.create
+          node = parent.children.create
+          new_parent = TouchTreeNode.create
+
+          expect do
+            node.update_attributes(parent: new_parent)
+          end.to change { new_parent.reload.updated_at }
+        end
+      end
+
+      it 'should update parent timestamp when child is deleted' do
+        parent = TouchTreeNode.create
+        node = parent.children.create
+
+        expect do
+          node.destroy
+        end.to change { parent.reload.updated_at }
+      end
+    end
+
+    context 'disabled' do
+      it 'should not update ancestor timestamp' do
+        parent = TreeNode.create
+        expect do
+          parent.children.create
+        end.not_to change { parent.reload.updated_at }
+      end
+    end
+  end
 end

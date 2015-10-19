@@ -5,8 +5,8 @@ module Parentry
     end
 
     def prevent_circular_parentry
-      computed = compute_parentry
-      errors.add(:parentry, 'contains a circular reference') unless computed.split('.').uniq == computed.split('.')
+      computed = parse_parentry(compute_parentry)
+      errors.add(:parentry, 'contains a circular reference') unless computed.uniq == computed
     end
 
     def commit_parentry
@@ -39,6 +39,34 @@ module Parentry
 
     def parentry
       read_attribute(parentry_column)
+    end
+
+    def parse_parentry(input = parentry)
+      input.to_s.split('.').map(&:to_i)
+    end
+
+    def touch_ancestors_callback
+      return unless touch_ancestors
+      return if touch_callbacks_disabled?
+
+      parentry_scope.where(id: ancestor_ids_was + ancestor_ids).each do |ancestor|
+        ancestor.without_touch_callbacks { ancestor.touch }
+      end
+    end
+
+    def without_touch_callbacks
+      @disable_touch_callbacks = true
+      yield
+      @disable_touch_callbacks = false
+    end
+
+    def touch_callbacks_disabled?
+      @disable_touch_callbacks
+    end
+
+    def ancestor_ids_was
+      return [] unless changes[parentry_column]
+      parse_parentry(changes[parentry_column][0]).tap(&:pop)
     end
   end
 end

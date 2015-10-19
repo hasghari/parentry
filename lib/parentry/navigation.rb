@@ -13,7 +13,7 @@ module Parentry
     end
 
     def path_ids
-      parentry.split('.').map(&:to_i)
+      parse_parentry
     end
 
     def path(scopes = {})

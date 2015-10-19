@@ -7,3 +7,8 @@ class OneDepthTreeNode < ActiveRecord::Base
   include Parentry
   parentry depth_offset: 1
 end
+
+class TouchTreeNode < ActiveRecord::Base
+  include Parentry
+  parentry touch: true
+end

@@ -4,6 +4,7 @@ module Parentry
       self.parentry_column = options.fetch(:parentry_column, 'parentry')
       self.depth_offset = options.fetch(:depth_offset, 0)
       self.cache_depth = options.fetch(:cache_depth, false)
+      self.touch_ancestors = options.fetch(:touch, false)
     end
 
     def arrange(options = {})
