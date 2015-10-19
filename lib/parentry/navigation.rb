@@ -79,7 +79,8 @@ module Parentry
 
     def depth
       return depth_offset if root?
-      parent.depth + 1
+      return parent.depth + 1 if changes[:parent_id].present?
+      path_ids.size - 1 + depth_offset
     end
 
     private

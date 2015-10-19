@@ -63,6 +63,20 @@ describe Parentry::InstanceMethods do
       node.update_attributes(parent: new_parent)
       expect(child.reload.parentry).to eq "#{node.parentry}.#{child.id}"
     end
+
+    it 'should have correct depth' do
+      grand_parent = TreeNode.create
+      parent = grand_parent.children.create
+      node = parent.children.create
+      expect(node.depth).to eq 2
+
+      node.parent = grand_parent
+      expect(node.depth).to eq 1
+
+      node.save
+
+      expect(node.parentry_depth).to eq 1
+    end
   end
 
   context 'touch ancestors option' do
