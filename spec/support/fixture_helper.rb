@@ -2,9 +2,9 @@ module FixtureHelper
   def fixture_parentry(*entries)
     case ENV['STRATEGY']
     when 'array'
-      "\"{#{entries.join(',')}}\""
+      entries
     else
-      entries.join('.')
+      "\"#{entries.join('.')}\""
     end
   end
 end

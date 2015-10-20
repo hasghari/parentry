@@ -1,7 +1,12 @@
 language: ruby
 rvm:
-  - 2.2.2
+  - 2.0.0
+  - 2.1.0
+  - 2.2.0
 env:
   - STRATEGY=array
   - STRATEGY=ltree
+gemfile:
+  - gemfiles/activerecord_4.1.gemfile
+  - gemfiles/activerecord_4.2.gemfile
 before_install: gem install bundler -v 1.10.6
