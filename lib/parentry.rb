@@ -1,4 +1,5 @@
 require 'parentry/version'
+require 'parentry/strategy'
 
 module Parentry
   autoload :InstanceMethods, 'parentry/instance_methods'
@@ -7,7 +8,7 @@ module Parentry
 
   def self.included(base)
     base.class_eval do
-      mattr_accessor :parentry_column, :depth_offset, :cache_depth, :touch_ancestors
+      mattr_accessor :parentry_strategy, :parentry_column, :depth_offset, :cache_depth, :touch_ancestors
 
       belongs_to :parent, class_name: base_class.name
       has_many :children, class_name: base_class.name, foreign_key: :parent_id, dependent: :destroy
@@ -31,19 +32,19 @@ module Parentry
       after_touch :touch_ancestors_callback
       after_destroy :touch_ancestors_callback
 
-      scope :order_by_parentry, -> { order("nlevel(#{parentry_column})") }
+      scope :order_by_parentry, -> { order(parentry_depth_function) }
 
-      scope :before_depth, ->(depth) { where("nlevel(#{parentry_column}) - 1 < ?", depth + depth_offset) }
-      scope :to_depth, ->(depth) { where("nlevel(#{parentry_column}) - 1 <= ?", depth + depth_offset) }
-      scope :at_depth, ->(depth) { where("nlevel(#{parentry_column}) - 1 = ?", depth + depth_offset) }
-      scope :from_depth, ->(depth) { where("nlevel(#{parentry_column}) - 1 >= ?", depth + depth_offset) }
-      scope :after_depth, ->(depth) { where("nlevel(#{parentry_column}) - 1 > ?", depth + depth_offset) }
+      scope :before_depth, ->(depth) { where("#{parentry_depth_function} - 1 < ?", depth + depth_offset) }
+      scope :to_depth, ->(depth) { where("#{parentry_depth_function} - 1 <= ?", depth + depth_offset) }
+      scope :at_depth, ->(depth) { where("#{parentry_depth_function} - 1 = ?", depth + depth_offset) }
+      scope :from_depth, ->(depth) { where("#{parentry_depth_function} - 1 >= ?", depth + depth_offset) }
+      scope :after_depth, ->(depth) { where("#{parentry_depth_function} - 1 > ?", depth + depth_offset) }
 
-      scope :roots, -> { where("nlevel(#{parentry_column}) = 1") }
-      scope :ancestors_of, ->(node) { where("#{parentry_column} @> ?", node.parentry).where.not(id: node.id) }
+      scope :roots, -> { where("#{parentry_depth_function} = 1") }
+      scope :ancestors_of, ->(node) { where(node.ancestor_conditions).where.not(id: node.id) }
       scope :children_of, ->(node) { where(parent_id: node.id) }
       scope :descendants_of, ->(node) { subtree_of(node).where.not(id: node.id) }
-      scope :subtree_of, ->(node) { where("#{parentry_column} <@ ?", node.parentry) }
+      scope :subtree_of, ->(node) { where(node.subtree_conditions) }
       scope :siblings_of, ->(node) { where(parent_id: node.parent_id).where.not(id: node.id) }
     end
 

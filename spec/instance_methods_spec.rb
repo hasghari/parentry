@@ -1,12 +1,16 @@
 require 'spec_helper'
 
 describe Parentry::InstanceMethods do
+  def parse(parentry)
+    TreeNode.new.parse_parentry(parentry)
+  end
+
   it { expect(TreeNode.new.parentry_column).to eq 'parentry' }
 
   it 'should persist parentry path after create' do
     parent = TreeNode.create
     node = TreeNode.create parent: parent
-    expect(node.parentry).to eq "#{parent.id}.#{node.id}"
+    expect(parse(node.parentry)).to eq [parent.id, node.id]
   end
 
   it 'should not be valid when parent not persisted' do
@@ -33,7 +37,7 @@ describe Parentry::InstanceMethods do
     node = parent.children.create
 
     expect(node.parent).to eq parent
-    expect(node.parentry).to eq "#{parent.id}.#{node.id}"
+    expect(parse(node.parentry)).to eq [parent.id, node.id]
   end
 
   it 'caches parentry depth' do
@@ -51,7 +55,7 @@ describe Parentry::InstanceMethods do
 
       new_parent = TreeNode.create
       node.update_attributes(parent: new_parent)
-      expect(node.parentry).to eq "#{new_parent.parentry}.#{node.id}"
+      expect(parse(node.parentry)).to eq [new_parent.id, node.id]
     end
 
     it 'should cascade changes to children' do
@@ -61,7 +65,7 @@ describe Parentry::InstanceMethods do
 
       new_parent = TreeNode.create
       node.update_attributes(parent: new_parent)
-      expect(child.reload.parentry).to eq "#{node.parentry}.#{child.id}"
+      expect(parse(child.reload.parentry)).to eq [new_parent.id, node.id, child.id]
     end
 
     it 'should have correct depth' do

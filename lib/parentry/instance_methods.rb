@@ -21,28 +21,8 @@ module Parentry
       write_attribute(:parentry_depth, depth)
     end
 
-    def cascade_parentry
-      old_path, new_path = changes[parentry_column]
-      parentry_scope.where(
-        ["#{parentry_column} <@ :ltree AND id != :id", ltree: old_path, id: id]
-      ).update_all(
-        [
-          "#{parentry_column} = :new_path || subpath(#{parentry_column}, nlevel(:old_path))",
-          new_path: new_path, old_path: old_path
-        ]
-      )
-    end
-
-    def compute_parentry
-      parent.present? ? "#{parent.parentry}.#{id}" : "#{id}"
-    end
-
     def parentry
       read_attribute(parentry_column)
-    end
-
-    def parse_parentry(input = parentry)
-      input.to_s.split('.').map(&:to_i)
     end
 
     def touch_ancestors_callback

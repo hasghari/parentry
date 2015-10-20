@@ -63,7 +63,7 @@ module Parentry
 
     def subtree(scopes = {})
       with_depth_scopes(scopes) do
-        parentry_scope.where("#{parentry_column} <@ ?", parentry)
+        parentry_scope.where(subtree_conditions)
       end
     end
 

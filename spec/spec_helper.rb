@@ -20,6 +20,9 @@ require 'action_controller'
 require 'database_cleaner'
 require 'rspec/rails'
 
+require 'support/fixture_helper'
+ActiveRecord::FixtureSet.context_class.send :include, FixtureHelper
+
 RSpec.configure do |config|
   config.fixture_path = File.join(File.dirname(__FILE__), 'fixtures')
   DatabaseCleaner.strategy = :transaction

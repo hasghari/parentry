@@ -1,10 +1,14 @@
 module Parentry
   module ClassMethods
     def parentry(options = {})
+      self.parentry_strategy = options.fetch(:strategy, 'ltree').to_s
       self.parentry_column = options.fetch(:parentry_column, 'parentry')
       self.depth_offset = options.fetch(:depth_offset, 0)
       self.cache_depth = options.fetch(:cache_depth, false)
       self.touch_ancestors = options.fetch(:touch, false)
+
+      include Strategy::Ltree if parentry_strategy == 'ltree'
+      include Strategy::Array if parentry_strategy == 'array'
     end
 
     def arrange(options = {})
