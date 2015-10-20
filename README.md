@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hasghari/parentry.svg?branch=master)](https://travis-ci.org/hasghari/parentry)
+
 # Parentry
 
 Parentry in its current incarnation is an ActiveRecord extension for the [PostgreSQL ltree](http://www.postgresql.org/docs/9.4/static/ltree.html) module.
