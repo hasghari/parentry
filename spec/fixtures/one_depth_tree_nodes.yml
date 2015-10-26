@@ -1,13 +1,13 @@
 odtn1:
   id: 1
-  parentry: <%= fixture_parentry(1) %>
+  parentry: <%= [1].to_parentry %>
 
 odtn1_odtn2:
   id: 2
   parent_id: 1
-  parentry: <%= fixture_parentry(1, 2) %>
+  parentry: <%= [1, 2].to_parentry %>
 
 odtn1_odtn2_odtn3:
   id: 3
   parent_id: 2
-  parentry: <%= fixture_parentry(1, 2, 3) %>
+  parentry: <%= [1, 2, 3].to_parentry %>

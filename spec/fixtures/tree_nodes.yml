@@ -1,41 +1,41 @@
 n1:
   id: 1
-  parentry: <%= fixture_parentry(1) %>
+  parentry: <%= [1].to_parentry %>
   rank: 1
 
 n1_n2:
   id: 2
   parent_id: 1
-  parentry: <%= fixture_parentry(1, 2) %>
+  parentry: <%= [1, 2].to_parentry %>
   rank: 2
 
 n1_n3:
   id: 3
   parent_id: 1
-  parentry: <%= fixture_parentry(1, 3) %>
+  parentry: <%= [1, 3].to_parentry %>
   rank: 1
 
 n1_n2_n4:
   id: 4
   parent_id: 2
-  parentry: <%= fixture_parentry(1, 2, 4) %>
+  parentry: <%= [1, 2, 4].to_parentry %>
 
 n5:
   id: 5
-  parentry: <%= fixture_parentry(5) %>
+  parentry: <%= [5].to_parentry %>
   rank: 2
 
 n5_n6:
   id: 6
   parent_id: 5
-  parentry: <%= fixture_parentry(5, 6) %>
+  parentry: <%= [5, 6].to_parentry %>
 
 n5_n6_n7:
   id: 7
   parent_id: 6
-  parentry: <%= fixture_parentry(5, 6, 7) %>
+  parentry: <%= [5, 6, 7].to_parentry %>
 
 n5_n6_n7_n8:
   id: 8
   parent_id: 7
-  parentry: <%= fixture_parentry(5, 6, 7, 8) %>
+  parentry: <%= [5, 6, 7, 8].to_parentry %>
