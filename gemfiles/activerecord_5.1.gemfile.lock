@@ -1,8 +1,8 @@
 PATH
   remote: ..
   specs:
-    parentry (0.4.0)
-      activerecord (~> 5.1.0)
+    parentry (1.0.1)
+      activerecord (~> 5.1)
 
 GEM
   remote: https://rubygems.org/
@@ -105,12 +105,12 @@ DEPENDENCIES
   appraisal
   bundler (~> 1.10)
   combustion (= 0.5.3)
-  database_cleaner
+  database_cleaner (~> 1.6)
   parentry!
-  pg
-  pry
+  pg (~> 0.20)
+  pry (~> 0.10)
   rake (~> 10.0)
-  rspec-rails
+  rspec-rails (~> 3.6)
 
 BUNDLED WITH
    1.14.6
