@@ -45,8 +45,8 @@ module Parentry
     end
 
     def ancestor_ids_was
-      return [] unless changes[parentry_column]
-      parse_parentry(changes[parentry_column][0]).tap(&:pop)
+      return [] unless saved_changes[parentry_column]
+      parse_parentry(saved_changes[parentry_column][0]).tap(&:pop)
     end
   end
 end

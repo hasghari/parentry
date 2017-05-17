@@ -11,7 +11,7 @@ module Parentry
         end
 
         def cascade_parentry
-          old_path, new_path = changes[parentry_column]
+          old_path, new_path = saved_changes[parentry_column]
           parentry_scope.where(
             ["#{parentry_column} <@ :tree AND id != :id", tree: old_path, id: id]
           ).update_all(
