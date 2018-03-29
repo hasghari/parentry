@@ -1,8 +1,8 @@
 PATH
   remote: ..
   specs:
-    parentry (1.0.1)
-      activerecord (>= 5.1)
+    parentry (1.1.0)
+      activerecord (~> 5.1)
 
 GEM
   remote: https://rubygems.org/
