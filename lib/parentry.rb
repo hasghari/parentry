@@ -10,7 +10,7 @@ module Parentry
     base.class_eval do
       mattr_accessor :parentry_strategy, :parentry_column, :depth_offset, :cache_depth, :touch_ancestors
 
-      belongs_to :parent, class_name: base_class.name
+      belongs_to :parent, class_name: base_class.name, optional: true
       has_many :children, class_name: base_class.name, foreign_key: :parent_id, dependent: :destroy
 
       validate do
