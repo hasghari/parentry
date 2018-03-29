@@ -11,3 +11,4 @@
 .ruby-gemset
 .ruby-version
 /vendor/
+/spec/internal/log/*

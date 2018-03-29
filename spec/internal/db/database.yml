@@ -1,0 +1,5 @@
+test:
+  adapter:  postgresql
+  host: localhost
+  database: parentry_test
+  username: postgres
