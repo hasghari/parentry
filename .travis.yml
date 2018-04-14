@@ -8,4 +8,5 @@ env:
   - STRATEGY=ltree
 gemfile:
   - gemfiles/activerecord_5.1.5.gemfile
+  - gemfiles/activerecord_5.2.0.gemfile
 before_install: gem install bundler -v 1.10.6

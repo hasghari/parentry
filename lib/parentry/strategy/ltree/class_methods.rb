@@ -3,7 +3,7 @@ module Parentry
     module Ltree
       module ClassMethods
         def parentry_depth_function
-          "nlevel(#{parentry_column})"
+          Arel.sql("nlevel(#{parentry_column})")
         end
       end
     end
