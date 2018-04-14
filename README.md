@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/hasghari/parentry.svg?branch=master)](https://travis-ci.org/hasghari/parentry)
+[![Maintainability](https://api.codeclimate.com/v1/badges/cc7180328fffcbdea2bb/maintainability)](https://codeclimate.com/github/hasghari/parentry/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/cc7180328fffcbdea2bb/test_coverage)](https://codeclimate.com/github/hasghari/parentry/test_coverage)
 
 # Parentry
 
