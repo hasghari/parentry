@@ -25,4 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'combustion', '0.9.0'
   spec.add_development_dependency 'database_cleaner', '~> 1.6'
   spec.add_development_dependency 'pry', '~> 0.10'
+  spec.add_development_dependency 'simplecov', '~> 0.16'
 end
