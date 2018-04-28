@@ -26,11 +26,26 @@ Or install it yourself as:
 
 ## Usage
 
-This gem requires 2 columns for each table: `parentry` and `parent_id`. A sample migration would look like:
+This gem requires 2 columns for each table: `parentry` and `parent_id`, and can leverage either the `ltree` postgresql extension, or else postgres `array` columns. A sample migration would look like:
 
 ```ruby
-add_column :my_table, :parentry, :ltree
+enable_extension 'ltree' # ltree is not turned on by default; skip if you use the array strategy
+
 add_column :my_table, :parent_id, :integer
+
+add_column :my_table, :parentry, :ltree
+add_column :my_table, :parentry_depth, :integer, default: 0 # optional
+
+add_index :my_table, :parentry, using: :gist
+```
+
+```ruby
+class MyTable < ApplicationRecord
+  include Parentry
+  parentry cache_depth: true
+  # to change strategy to array, and avoid dependency on ltree
+  # parentry strategy: :array
+end
 ```
 
 ## Contributing
