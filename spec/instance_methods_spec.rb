@@ -54,7 +54,7 @@ describe Parentry::InstanceMethods do
       node = TreeNode.create parent: old_parent
 
       new_parent = TreeNode.create
-      node.update_attributes(parent: new_parent)
+      node.update(parent: new_parent)
       expect(parse(node.parentry)).to eq [new_parent.id, node.id]
     end
 
@@ -64,7 +64,7 @@ describe Parentry::InstanceMethods do
       child = TreeNode.create parent: node
 
       new_parent = TreeNode.create
-      node.update_attributes(parent: new_parent)
+      node.update(parent: new_parent)
       expect(parse(child.reload.parentry)).to eq [new_parent.id, node.id, child.id]
     end
 
@@ -99,7 +99,7 @@ describe Parentry::InstanceMethods do
           new_parent = TouchTreeNode.create
 
           expect do
-            node.update_attributes(parent: new_parent)
+            node.update(parent: new_parent)
           end.to change { parent.reload.updated_at }
         end
 
@@ -109,7 +109,7 @@ describe Parentry::InstanceMethods do
           new_parent = TouchTreeNode.create
 
           expect do
-            node.update_attributes(parent: new_parent)
+            node.update(parent: new_parent)
           end.to change { new_parent.reload.updated_at }
         end
       end
