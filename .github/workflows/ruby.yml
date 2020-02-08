@@ -1,0 +1,69 @@
+name: Ruby
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby:
+          - 2.5.x
+          - 2.6.x
+        activerecord:
+          - 5.1.5
+          - 5.2.0
+          - 6.0.0
+        strategy:
+          - array
+          - ltree
+
+    services:
+      postgres:
+        image: postgres:9.6
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: parentry_test
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('gemfiles/*.gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get -yqq install libpq-dev
+
+      - name: Configure Bundler
+        env:
+          ACTIVERECORD_VERSION: ${{ matrix.activerecord }}
+        run: |
+          export BUNDLE_GEMFILE="${GITHUB_WORKSPACE}/gemfiles/activerecord_${ACTIVERECORD_VERSION}.gemfile"
+          gem install bundler -v 1.17.3 --no-document
+          bundle config set path 'vendor/bundle'
+          bundle install --jobs 4 --retry 3
+
+      - name: Run tests with RSpec
+        uses: paambaati/codeclimate-action@v2.4.0
+        env:
+          CC_TEST_REPORTER_ID: 4a8875ec1a4bd9cc55d9fe48779be866f90ac331155d039fa3d13b2a61b4fa9f
+          STRATEGY: ${{ matrix.strategy }}
+        with:
+          coverageCommand: bundle exec rspec
+          debug: false
