@@ -42,7 +42,7 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('gemfiles/*.gemfile.lock') }}
+          key: ${{ runner.os }}-gems-${{ hashFiles(format('gemfiles/activerecord_{0}.gemfile.lock', matrix.activerecord)) }}
           restore-keys: |
             ${{ runner.os }}-gems-
 
