@@ -6,7 +6,7 @@ ActiveRecord::Schema.define(version: 0) do
     when 'array'
       [:parentry, :integer, array: true]
     else
-      [:parentry, :ltree]
+      %i(parentry ltree)
     end
   end
 

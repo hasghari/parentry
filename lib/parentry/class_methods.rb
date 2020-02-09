@@ -11,12 +11,13 @@ module Parentry
       include Strategy::Array if parentry_strategy == 'array'
     end
 
+    # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     def arrange(options = {})
       scope =
         if (order = options.delete(:order))
-          self.base_class.order_by_parentry.order(order)
+          base_class.order_by_parentry.order(order)
         else
-          self.base_class.order_by_parentry
+          base_class.order_by_parentry
         end
 
       scope.where(options).each_with_object(Hash.new { |h, k| h[k] = {} }) do |node, memo|
@@ -27,5 +28,6 @@ module Parentry
         insert_node[node] = {}
       end
     end
+    # rubocop:enable Metrics/AbcSize,Metrics/MethodLength
   end
 end

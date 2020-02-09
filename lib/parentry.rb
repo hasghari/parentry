@@ -6,6 +6,7 @@ module Parentry
   autoload :Navigation, 'parentry/navigation'
   autoload :ClassMethods, 'parentry/class_methods'
 
+  # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/BlockLength
   def self.included(base)
     base.class_eval do
       mattr_accessor :parentry_strategy, :parentry_column, :depth_offset, :cache_depth, :touch_ancestors
@@ -14,9 +15,7 @@ module Parentry
       has_many :children, class_name: base_class.name, foreign_key: :parent_id, dependent: :destroy
 
       validate do
-        unless parent.blank? || parent.persisted?
-          errors.add(:parent, 'must be persisted')
-        end
+        errors.add(:parent, 'must be persisted') unless parent.blank? || parent.persisted?
       end
 
       validate :prevent_circular_parentry
@@ -52,4 +51,5 @@ module Parentry
     base.send :include, InstanceMethods
     base.extend ClassMethods
   end
+  # rubocop:enable Metrics/AbcSize,Metrics/MethodLength,Metrics/BlockLength
 end

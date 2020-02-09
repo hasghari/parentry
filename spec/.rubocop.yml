@@ -1,0 +1,13 @@
+require: rubocop-rspec
+
+inherit_from:
+  - ../.rubocop.yml
+
+Metrics/BlockLength:
+  Enabled: false
+
+RSpec/LetSetup:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 5

@@ -33,9 +33,9 @@ module Parentry
     end
 
     def leaf?
-      children.size == 0
+      children.size.zero?
     end
-    alias_method :childless?, :leaf?
+    alias childless? leaf?
 
     def children?
       !leaf?
@@ -50,7 +50,7 @@ module Parentry
     end
 
     def siblings?
-      siblings.size > 0
+      siblings.size.positive?
     end
 
     def only_child?
@@ -80,6 +80,7 @@ module Parentry
     def depth
       return depth_offset if root?
       return parent.depth + 1 if changes[:parent_id].present?
+
       path_ids.size - 1 + depth_offset
     end
 

@@ -7,7 +7,7 @@ module Parentry
         end
 
         def compute_parentry
-          parent.present? ? "#{parent.parentry}.#{id}" : "#{id}"
+          parent.present? ? "#{parent.parentry}.#{id}" : id.to_s
         end
 
         def cascade_parentry

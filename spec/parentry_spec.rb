@@ -7,7 +7,7 @@ describe Parentry do
     expect(Parentry::VERSION).not_to be nil
   end
 
-  it 'should respond to parentry' do
+  it 'responds to parentry' do
     expect(TreeNode).to respond_to :parentry
   end
 
@@ -45,39 +45,40 @@ describe Parentry do
 
   describe '::arrange' do
     def collect_keys(hash, memo = [])
-      hash.each_with_object(memo) do |(key, children), memo|
-        memo << key.id
-        collect_keys(children, memo)
+      hash.each_with_object(memo) do |(key, children), m|
+        m << key.id
+        collect_keys(children, m)
       end
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it 'arranges nodes by depth' do
       expect(TreeNode.arrange).to eq(
-        {
-          tree_nodes(:n1) => {
-            tree_nodes(:n1_n2) => {
-              tree_nodes(:n1_n2_n4) => {}
-            },
-            tree_nodes(:n1_n3) => {}
+        tree_nodes(:n1) => {
+          tree_nodes(:n1_n2) => {
+            tree_nodes(:n1_n2_n4) => {}
           },
-          tree_nodes(:n5) => {
-            tree_nodes(:n5_n6) => {
-              tree_nodes(:n5_n6_n7) => {
-                tree_nodes(:n5_n6_n7_n8) => {}
-              }
+          tree_nodes(:n1_n3) => {}
+        },
+        tree_nodes(:n5) => {
+          tree_nodes(:n5_n6) => {
+            tree_nodes(:n5_n6_n7) => {
+              tree_nodes(:n5_n6_n7_n8) => {}
             }
           }
         }
       )
     end
+    # rubocop:enable RSpec/ExampleLength
 
     it 'sorts by additional order argument' do
       arranged = TreeNode.arrange(order: :rank)
       expect(collect_keys(arranged)).to eq [1, 3, 2, 4, 5, 6, 7, 8]
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it 'arranges subtree' do
-      expect(TreeNode.from_depth(1).arrange).to eq({
+      expect(TreeNode.from_depth(1).arrange).to eq(
         tree_nodes(:n1_n2) => {
           tree_nodes(:n1_n2_n4) => {}
         },
@@ -87,7 +88,8 @@ describe Parentry do
             tree_nodes(:n5_n6_n7_n8) => {}
           }
         }
-      })
+      )
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 end

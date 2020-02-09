@@ -8,6 +8,7 @@ module Parentry
 
         def compute_parentry
           return [] unless persisted?
+
           parent.present? ? parent.parentry + [id] : [id]
         end
 
