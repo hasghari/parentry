@@ -22,7 +22,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:9.6
+        image: postgres:11.6
         env:
           POSTGRES_USER: postgres
           POSTGRES_DB: parentry_test
@@ -60,7 +60,7 @@ jobs:
           bundle install --jobs 4 --retry 3
 
       - name: Run tests with RSpec
-        uses: paambaati/codeclimate-action@v2.4.0
+        uses: paambaati/codeclimate-action@v2.5.3
         env:
           CC_TEST_REPORTER_ID: 4a8875ec1a4bd9cc55d9fe48779be866f90ac331155d039fa3d13b2a61b4fa9f
           STRATEGY: ${{ matrix.strategy }}
