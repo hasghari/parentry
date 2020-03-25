@@ -3,3 +3,4 @@ test:
   host: localhost
   database: parentry_test
   username: postgres
+  password: postgres
