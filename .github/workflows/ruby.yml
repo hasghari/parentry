@@ -61,7 +61,7 @@ jobs:
           bundle install --jobs 4 --retry 3
 
       - name: Run tests with RSpec
-        uses: paambaati/codeclimate-action@v2.5.3
+        uses: paambaati/codeclimate-action@v2.5.4
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
           STRATEGY: ${{ matrix.strategy }}
