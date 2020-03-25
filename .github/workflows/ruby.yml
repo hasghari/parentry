@@ -56,7 +56,7 @@ jobs:
         run: |
           export BUNDLE_GEMFILE="${GITHUB_WORKSPACE}/gemfiles/activerecord_${ACTIVERECORD_VERSION}.gemfile"
           gem install bundler -v 1.17.3 --no-document
-          bundle config set path 'vendor/bundle'
+          bundle config path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
 
       - name: Run tests with RSpec
