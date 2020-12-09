@@ -12,10 +12,12 @@ jobs:
         ruby:
           - 2.5.x
           - 2.6.x
+          - 2.7.x
         activerecord:
           - 5.1.5
           - 5.2.0
           - 6.0.0
+          - 6.1.0
         strategy:
           - array
           - ltree
@@ -25,7 +27,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:12.2
+        image: postgres:12.4
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -56,8 +58,8 @@ jobs:
 
       - name: Configure Bundler
         run: |
-          gem install bundler -v 1.17.3 --no-document
-          bundle config path 'vendor/bundle'
+          gem install bundler:2.1.4 --no-document
+          bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
 
       - name: Run tests with RSpec
