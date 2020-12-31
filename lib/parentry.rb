@@ -1,6 +1,8 @@
 require 'parentry/version'
 require 'parentry/strategy'
 
+require 'active_support/concern'
+
 module Parentry
   autoload :InstanceMethods, 'parentry/instance_methods'
   autoload :Navigation, 'parentry/navigation'
