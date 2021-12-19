@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    parentry (1.4.0)
+    parentry (1.5.0)
       activerecord (>= 5.1, < 7.1)
 
 GEM
