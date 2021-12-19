@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.5'
 
-  spec.add_dependency 'activerecord', '>= 5.1', '< 6.2'
+  spec.add_dependency 'activerecord', '>= 5.1', '< 7.1'
 
   spec.add_development_dependency 'bundler', '~> 2'
   spec.add_development_dependency 'combustion', '~> 1.1'
