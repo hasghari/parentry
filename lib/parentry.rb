@@ -39,13 +39,17 @@ module Parentry
 
     scope :order_by_parentry, -> { order(parentry_depth_function) }
 
-    scope :before_depth, ->(depth) { where("#{parentry_depth_function} - 1 < ?", depth + depth_offset) }
-    scope :to_depth, ->(depth) { where("#{parentry_depth_function} - 1 <= ?", depth + depth_offset) }
-    scope :at_depth, ->(depth) { where("#{parentry_depth_function} - 1 = ?", depth + depth_offset) }
-    scope :from_depth, ->(depth) { where("#{parentry_depth_function} - 1 >= ?", depth + depth_offset) }
-    scope :after_depth, ->(depth) { where("#{parentry_depth_function} - 1 > ?", depth + depth_offset) }
+    {
+      before_depth: Arel::Nodes::LessThan,
+      to_depth: Arel::Nodes::LessThanOrEqual,
+      at_depth: Arel::Nodes::Equality,
+      from_depth: Arel::Nodes::GreaterThanOrEqual,
+      after_depth: Arel::Nodes::GreaterThan
+    }.each do |name, node|
+      scope name, ->(depth) { where(node.new(parentry_depth_function, depth + depth_offset + 1)) }
+    end
 
-    scope :roots, -> { where("#{parentry_depth_function} = 1") }
+    scope :roots, -> { where(Arel::Nodes::Equality.new(parentry_depth_function, 1)) }
     scope :ancestors_of, ->(node) { where(node.ancestor_conditions).where.not(id: node.id) }
     scope :children_of, ->(node) { where(parent_id: node.id) }
     scope :descendants_of, ->(node) { subtree_of(node).where.not(id: node.id) }

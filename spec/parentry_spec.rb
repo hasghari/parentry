@@ -20,6 +20,7 @@ describe Parentry do
 
     it { expect(TreeNode.at_depth(0).pluck(:id)).to match_array [1, 5] }
     it { expect(TreeNode.at_depth(1).pluck(:id)).to match_array [2, 3, 6] }
+    it { expect(TreeNode.at_depth(1).joins(:children).pluck(:id)).to match_array [2, 6] }
     it { expect(TreeNode.at_depth(2).pluck(:id)).to match_array [4, 7] }
 
     it { expect(TreeNode.from_depth(0).pluck(:id)).to match_array [1, 2, 3, 4, 5, 6, 7, 8] }
