@@ -47,7 +47,7 @@ describe Parentry::Navigation do
   end
 
   describe '#child_ids' do
-    it { expect(tree_nodes(:n1).child_ids).to match_array [2, 3] }
+    it { expect(tree_nodes(:n1).child_ids).to contain_exactly(2, 3) }
     it { expect(tree_nodes(:n1_n2).child_ids).to eq [4] }
   end
 
@@ -88,31 +88,31 @@ describe Parentry::Navigation do
   end
 
   describe '#subtree_ids' do
-    it { expect(tree_nodes(:n1).subtree_ids).to match_array [1, 2, 3, 4] }
-    it { expect(tree_nodes(:n1_n2).subtree_ids).to match_array [2, 4] }
+    it { expect(tree_nodes(:n1).subtree_ids).to contain_exactly(1, 2, 3, 4) }
+    it { expect(tree_nodes(:n1_n2).subtree_ids).to contain_exactly(2, 4) }
     it { expect(tree_nodes(:n1_n2_n4).subtree_ids).to eq [4] }
-    it { expect(tree_nodes(:n5).subtree_ids).to match_array [5, 6, 7, 8] }
+    it { expect(tree_nodes(:n5).subtree_ids).to contain_exactly(5, 6, 7, 8) }
   end
 
   describe '#subtree' do
-    it { expect(tree_nodes(:n1).subtree.map(&:id)).to match_array [1, 2, 3, 4] }
-    it { expect(tree_nodes(:n1_n2).subtree.map(&:id)).to match_array [2, 4] }
+    it { expect(tree_nodes(:n1).subtree.map(&:id)).to contain_exactly(1, 2, 3, 4) }
+    it { expect(tree_nodes(:n1_n2).subtree.map(&:id)).to contain_exactly(2, 4) }
     it { expect(tree_nodes(:n1_n2_n4).subtree.map(&:id)).to eq [4] }
-    it { expect(tree_nodes(:n5).subtree.map(&:id)).to match_array [5, 6, 7, 8] }
+    it { expect(tree_nodes(:n5).subtree.map(&:id)).to contain_exactly(5, 6, 7, 8) }
   end
 
   describe '#descendant_ids' do
-    it { expect(tree_nodes(:n1).descendant_ids).to match_array [2, 3, 4] }
+    it { expect(tree_nodes(:n1).descendant_ids).to contain_exactly(2, 3, 4) }
     it { expect(tree_nodes(:n1_n2).descendant_ids).to eq [4] }
     it { expect(tree_nodes(:n1_n2_n4).descendant_ids).to eq [] }
-    it { expect(tree_nodes(:n5).descendant_ids).to match_array [6, 7, 8] }
+    it { expect(tree_nodes(:n5).descendant_ids).to contain_exactly(6, 7, 8) }
   end
 
   describe '#descendants' do
-    it { expect(tree_nodes(:n1).descendants.map(&:id)).to match_array [2, 3, 4] }
+    it { expect(tree_nodes(:n1).descendants.map(&:id)).to contain_exactly(2, 3, 4) }
     it { expect(tree_nodes(:n1_n2).descendants.map(&:id)).to eq [4] }
     it { expect(tree_nodes(:n1_n2_n4).descendants.map(&:id)).to eq [] }
-    it { expect(tree_nodes(:n5).descendants.map(&:id)).to match_array [6, 7, 8] }
+    it { expect(tree_nodes(:n5).descendants.map(&:id)).to contain_exactly(6, 7, 8) }
   end
 
   describe '#depth' do
