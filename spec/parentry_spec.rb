@@ -4,7 +4,7 @@ describe Parentry do
   fixtures :tree_nodes
 
   it 'has a version number' do
-    expect(Parentry::VERSION).not_to be nil
+    expect(Parentry::VERSION).not_to be_nil
   end
 
   it 'responds to parentry' do
@@ -12,36 +12,36 @@ describe Parentry do
   end
 
   describe 'scopes' do
-    it { expect(TreeNode.before_depth(1).pluck(:id)).to match_array [1, 5] }
-    it { expect(TreeNode.before_depth(2).pluck(:id)).to match_array [1, 2, 3, 5, 6] }
+    it { expect(TreeNode.before_depth(1).pluck(:id)).to contain_exactly(1, 5) }
+    it { expect(TreeNode.before_depth(2).pluck(:id)).to contain_exactly(1, 2, 3, 5, 6) }
 
-    it { expect(TreeNode.to_depth(1).pluck(:id)).to match_array [1, 2, 3, 5, 6] }
-    it { expect(TreeNode.to_depth(2).pluck(:id)).to match_array [1, 2, 3, 4, 5, 6, 7] }
+    it { expect(TreeNode.to_depth(1).pluck(:id)).to contain_exactly(1, 2, 3, 5, 6) }
+    it { expect(TreeNode.to_depth(2).pluck(:id)).to contain_exactly(1, 2, 3, 4, 5, 6, 7) }
 
-    it { expect(TreeNode.at_depth(0).pluck(:id)).to match_array [1, 5] }
-    it { expect(TreeNode.at_depth(1).pluck(:id)).to match_array [2, 3, 6] }
-    it { expect(TreeNode.at_depth(1).joins(:children).pluck(:id)).to match_array [2, 6] }
-    it { expect(TreeNode.at_depth(2).pluck(:id)).to match_array [4, 7] }
+    it { expect(TreeNode.at_depth(0).pluck(:id)).to contain_exactly(1, 5) }
+    it { expect(TreeNode.at_depth(1).pluck(:id)).to contain_exactly(2, 3, 6) }
+    it { expect(TreeNode.at_depth(1).joins(:children).pluck(:id)).to contain_exactly(2, 6) }
+    it { expect(TreeNode.at_depth(2).pluck(:id)).to contain_exactly(4, 7) }
 
-    it { expect(TreeNode.from_depth(0).pluck(:id)).to match_array [1, 2, 3, 4, 5, 6, 7, 8] }
-    it { expect(TreeNode.from_depth(1).pluck(:id)).to match_array [2, 3, 4, 6, 7, 8] }
-    it { expect(TreeNode.from_depth(2).pluck(:id)).to match_array [4, 7, 8] }
+    it { expect(TreeNode.from_depth(0).pluck(:id)).to contain_exactly(1, 2, 3, 4, 5, 6, 7, 8) }
+    it { expect(TreeNode.from_depth(1).pluck(:id)).to contain_exactly(2, 3, 4, 6, 7, 8) }
+    it { expect(TreeNode.from_depth(2).pluck(:id)).to contain_exactly(4, 7, 8) }
 
-    it { expect(TreeNode.after_depth(0).pluck(:id)).to match_array [2, 3, 4, 6, 7, 8] }
-    it { expect(TreeNode.after_depth(1).pluck(:id)).to match_array [4, 7, 8] }
-    it { expect(TreeNode.after_depth(2).pluck(:id)).to match_array [8] }
+    it { expect(TreeNode.after_depth(0).pluck(:id)).to contain_exactly(2, 3, 4, 6, 7, 8) }
+    it { expect(TreeNode.after_depth(1).pluck(:id)).to contain_exactly(4, 7, 8) }
+    it { expect(TreeNode.after_depth(2).pluck(:id)).to contain_exactly(8) }
 
-    it { expect(TreeNode.roots.pluck(:id)).to match_array [1, 5] }
+    it { expect(TreeNode.roots.pluck(:id)).to contain_exactly(1, 5) }
 
-    it { expect(TreeNode.ancestors_of(tree_nodes(:n1_n2_n4)).pluck(:id)).to match_array [1, 2] }
+    it { expect(TreeNode.ancestors_of(tree_nodes(:n1_n2_n4)).pluck(:id)).to contain_exactly(1, 2) }
 
-    it { expect(TreeNode.children_of(tree_nodes(:n1)).pluck(:id)).to match_array [2, 3] }
+    it { expect(TreeNode.children_of(tree_nodes(:n1)).pluck(:id)).to contain_exactly(2, 3) }
 
-    it { expect(TreeNode.descendants_of(tree_nodes(:n1)).pluck(:id)).to match_array [2, 3, 4] }
+    it { expect(TreeNode.descendants_of(tree_nodes(:n1)).pluck(:id)).to contain_exactly(2, 3, 4) }
 
-    it { expect(TreeNode.subtree_of(tree_nodes(:n1)).pluck(:id)).to match_array [1, 2, 3, 4] }
+    it { expect(TreeNode.subtree_of(tree_nodes(:n1)).pluck(:id)).to contain_exactly(1, 2, 3, 4) }
 
-    it { expect(TreeNode.siblings_of(tree_nodes(:n1_n2)).pluck(:id)).to match_array [3] }
+    it { expect(TreeNode.siblings_of(tree_nodes(:n1_n2)).pluck(:id)).to contain_exactly(3) }
   end
 
   describe '::arrange' do

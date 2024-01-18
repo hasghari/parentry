@@ -33,7 +33,7 @@ module Parentry
     end
 
     def leaf?
-      children.size.zero?
+      children.empty?
     end
     alias childless? leaf?
 
