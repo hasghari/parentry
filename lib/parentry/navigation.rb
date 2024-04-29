@@ -46,7 +46,7 @@ module Parentry
     end
 
     def siblings
-      parentry_scope.where.not(id: id).where.not(parent_id: nil).where(parent_id: parent_id)
+      parentry_scope.where.not(id:).where.not(parent_id: nil).where(parent_id:)
     end
 
     def siblings?
@@ -73,7 +73,7 @@ module Parentry
 
     def descendants(scopes = {})
       with_depth_scopes(scopes) do
-        subtree.where.not(id: id)
+        subtree.where.not(id:)
       end
     end
 

@@ -9,13 +9,13 @@ describe Parentry::InstanceMethods do
 
   it 'persists parentry path after create' do
     parent = TreeNode.create
-    node = TreeNode.create parent: parent
+    node = TreeNode.create(parent:)
     expect(parse(node.parentry)).to eq [parent.id, node.id]
   end
 
   it 'is not valid when parent not persisted' do
     parent = TreeNode.new
-    expect(TreeNode.new(parent: parent)).not_to be_valid
+    expect(TreeNode.new(parent:)).not_to be_valid
   end
 
   it 'cannot create circular path' do
@@ -28,7 +28,7 @@ describe Parentry::InstanceMethods do
 
   it 'assigns parent when persisted' do
     parent = TreeNode.create
-    node = TreeNode.new parent: parent
+    node = TreeNode.new(parent:)
     expect(node.parent).to eq parent
   end
 
