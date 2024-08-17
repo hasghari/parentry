@@ -21,7 +21,13 @@ require 'rspec/rails'
 require 'support/array'
 
 RSpec.configure do |config|
-  config.fixture_path = File.join(File.dirname(__FILE__), 'fixtures')
+  fixture_path = File.join(File.dirname(__FILE__), 'fixtures')
+  if Rails::VERSION::STRING >= '7.1.0'
+    config.fixture_paths = [fixture_path]
+  else
+    config.fixture_path = fixture_path
+  end
+
   DatabaseCleaner.strategy = :transaction
 
   config.before(:suite) { DatabaseCleaner.clean_with :truncation }
