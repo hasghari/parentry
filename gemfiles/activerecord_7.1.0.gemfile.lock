@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    parentry (1.6.0)
+    parentry (1.7.0)
       activerecord (>= 6.1, < 8)
 
 GEM
@@ -213,4 +213,4 @@ DEPENDENCIES
   simplecov (~> 0.20)
 
 BUNDLED WITH
-   2.5.4
+   2.5.17
