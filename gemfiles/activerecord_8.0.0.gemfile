@@ -12,6 +12,6 @@ gem "rake"
 gem "rspec-rails"
 gem "rubocop-rspec"
 gem "simplecov", "~> 0.20"
-gem "activerecord", "~> 7.2", "< 8"
+gem "activerecord", "8.0.0.beta1", "< 9"
 
 gemspec path: "../"

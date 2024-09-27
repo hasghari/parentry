@@ -15,7 +15,7 @@ module Parentry
         def cascade_parentry
           old_path, new_path = saved_changes[parentry_column]
           parentry_scope.where(
-            ["#{parentry_column} @> ARRAY[:tree] AND id != :id", { tree: old_path, id: }]
+            ["#{parentry_column} @> ARRAY[:tree]::integer[] AND id != :id", { tree: old_path, id: }]
           ).update_all(
             [
               "#{parentry_column} = array_cat(ARRAY[?], #{parentry_column}[?:array_length(#{parentry_column}, 1)])",
@@ -25,11 +25,11 @@ module Parentry
         end
 
         def subtree_conditions
-          ["#{parentry_column} @> ARRAY[?]", parentry]
+          ["#{parentry_column} @> ARRAY[?]::integer[]", parentry]
         end
 
         def ancestor_conditions
-          ["#{parentry_column} <@ ARRAY[?]", parentry]
+          ["#{parentry_column} <@ ARRAY[?]::integer[]", parentry]
         end
       end
     end
