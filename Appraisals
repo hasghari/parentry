@@ -1,11 +1,3 @@
-appraise 'activerecord_6.1.0' do
-  gem 'activerecord', '~> 6.1', '< 6.2'
-  gem 'base64'
-  gem 'bigdecimal'
-  gem 'drb'
-  gem 'mutex_m'
-end
-
 appraise 'activerecord_7.0.0' do
   gem 'activerecord', '~> 7.0', '< 7.1'
   gem 'base64'
