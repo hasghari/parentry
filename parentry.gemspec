@@ -15,8 +15,8 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 3.1'
+  spec.required_ruby_version = '>= 3.2'
   spec.metadata['rubygems_mfa_required'] = 'true'
 
-  spec.add_dependency 'activerecord', '>= 6.1', '< 8.1'
+  spec.add_dependency 'activerecord', '>= 7.1', '< 8.1'
 end
