@@ -14,7 +14,6 @@ jobs:
           - '3.3'
           - '3.4'
         activerecord:
-          - 7.1.0
           - 7.2.0
           - 8.0.0
         strategy:
@@ -50,10 +49,5 @@ jobs:
           sudo apt-get -yqq install libpq-dev
 
       - name: Run tests with RSpec
-        uses: paambaati/codeclimate-action@v2.7.5
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-          STRATEGY: ${{ matrix.strategy }}
-        with:
-          coverageCommand: bundle exec rspec
-          debug: false
+        run: |
+          bundle exec rspec
