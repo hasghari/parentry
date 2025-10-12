@@ -14,7 +14,7 @@ Layout/LineLength:
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented_relative_to_receiver
 
-Naming/PredicateName:
+Naming/PredicatePrefix:
   AllowedMethods:
     - has_many
 
