@@ -10,7 +10,7 @@ module Parentry
 
   extend ActiveSupport::Concern
 
-  # rubocop:disable Metrics/BlockLength
+  # rubocop:disable-next Metrics/BlockLength
   included do
     include Navigation
     include InstanceMethods
@@ -56,5 +56,4 @@ module Parentry
     scope :subtree_of, ->(node) { where(node.subtree_conditions) }
     scope :siblings_of, ->(node) { where(parent_id: node.parent_id).where.not(id: node.id) }
   end
-  # rubocop:enable Metrics/BlockLength
 end
