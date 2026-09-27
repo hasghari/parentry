@@ -52,7 +52,7 @@ describe Parentry do
       end
     end
 
-    # rubocop:disable RSpec/ExampleLength
+    # rubocop:disable-next RSpec/ExampleLength
     it 'arranges nodes by depth' do
       expect(TreeNode.arrange).to eq(
         tree_nodes(:n1) => {
@@ -70,14 +70,13 @@ describe Parentry do
         }
       )
     end
-    # rubocop:enable RSpec/ExampleLength
 
     it 'sorts by additional order argument' do
       arranged = TreeNode.arrange(order: :rank)
       expect(collect_keys(arranged)).to eq [1, 3, 2, 4, 5, 6, 7, 8]
     end
 
-    # rubocop:disable RSpec/ExampleLength
+    # rubocop:disable-next RSpec/ExampleLength
     it 'arranges subtree' do
       expect(TreeNode.from_depth(1).arrange).to eq(
         tree_nodes(:n1_n2) => {
@@ -91,6 +90,5 @@ describe Parentry do
         }
       )
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 end

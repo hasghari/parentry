@@ -11,7 +11,7 @@ module Parentry
       include Strategy::Array if parentry_strategy == 'array'
     end
 
-    # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+    # rubocop:disable-next Metrics/AbcSize,Metrics/MethodLength
     def arrange(options = {})
       scope =
         if (order = options.delete(:order))
@@ -28,6 +28,5 @@ module Parentry
         insert_node[node] = {}
       end
     end
-    # rubocop:enable Metrics/AbcSize,Metrics/MethodLength
   end
 end
